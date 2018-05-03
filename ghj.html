@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="WorldMap" style="height:650px;width:800px;"></div>
+    <!-- ECharts单文件引入 -->
+    <div id="balance_echarts" style="height:650px;width:800px;"></div>
+    <div id="learn-echarts" style="height:650px;width:800px;"></div>
+    <div id="family-echarts" style="height:650px;width:800px;"></div>
+    <div id="main-echarts" style="height:650px;width:800px;"></div>
+  <!--  <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script> -->
+    <script src="echarts.min.js"></script>
+<script type="text/javascript">
+    var worldMapContainer = document.getElementById('WorldMap');
+
+//用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+var resizeWorldMapContainer = function () {
+    worldMapContainer.style.width = window.innerWidth+'px';
+    worldMapContainer.style.height = window.innerHeight+'px';
+};
+//设置容器高宽
+resizeWorldMapContainer();
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(worldMapContainer);
+
+// 指定图表的配置项和数据
+var option = {
+    title: {
+        text: 'ECharts 入门示例'
+    },
+    tooltip: {},
+    legend: {
+        data:['销量'],
+        height: worldMapContainer.style.height,
+        width: worldMapContainer.style.width
+    },
+    xAxis: {
+        data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+    },
+    yAxis: {},
+    series: [{
+        name: '销量',
+        type: 'bar',
+        data: [5, 20, 36, 10, 10, 20]
+    }]
+};
+
+// 使用刚指定的配置项和数据显示图表。
+myChart.setOption(option);
+
+//用于使chart自适应高度和宽度
+window.onresize = function () {
+    //重置容器高宽
+    resizeWorldMapContainer();
+    myChart.resize();
+};
+ </script>
+ <script>
+var dom = document.getElementById("balance_echarts");
+var myChart = echarts.init(dom);
+//用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+var resizeWorldMapContainer = function () {
+    dom.style.width = window.innerWidth+'px';
+    // dom.style.height = window.innerHeight+'px';
+};
+//设置容器高宽
+resizeWorldMapContainer();
+
+var app = {};
+option = null;
+app.title = '极坐标系下的堆叠柱状图';
+
+option = {
+     //下载canvas图
+toolbox: {
+            show: true,
+            orient:"vertical",
+            feature: {
+                magicType: {
+                
+                },
+                saveAsImage: {
+                    show:true,
+                    excludeComponents :['toolbox'],
+                    pixelRatio: 1
+                    
+                }
+            }
+        },
+    angleAxis: {
+        type: 'category',
+        data: [ '学业成绩', '家庭', '心灵成长', '友情', '娱乐时间', '健康', '社会活动','能力竞赛'],
+        z: 10,
+        startAngle: 90,
+　  　  splitNumber: 8, //坐标轴分割段数
+　  　  axisLine: { //坐标轴轴线设置
+　  　  show:true, 
+　　　　lineStyle: {
+　　　　　　color: '#333',
+　　　　}
+　　},
+　　axisTick: { //坐标轴刻度设置
+　　　　show: false
+　　},
+　　splitLine: { //分割线设置
+　　　　show: true,
+　　},
+　　axisLabel: { //刻度标签设置
+　　　　textStyle: {
+　　　　　　color: '#333',
+　　　　　　
+　　　　}
+　　}
+    },
+    radiusAxis: {
+        min: 0,
+        max:10,
+        splitNumber:10,  
+　    　axisLine: { //坐标轴轴线设置
+　　　　show: false,
+　　　　lineStyle: {
+　　　　　　color: "#333"
+　　　　 }
+　　},
+　　axisTick: { //坐标轴刻度设置
+　　　　show: false
+　　},
+　　axisLabel: { //刻度标签设置
+　　　　margin: 0, //刻度与坐标轴之间的距离
+　　　　textStyle: {
+　　　　　　color: 'transparent'
+　　　　}
+　　}
+　　
+    },
+    polar: {
+        center : ['50%', '50%'],    // 默认全局居中
+        radius : '80%',     
+    },
+    series: [{
+        type: 'bar',
+        data: [8, 0, 0, 0, 0, 0, 0, 0],
+        coordinateSystem: 'polar',
+        name: 'A',
+        stack: 'a',
+        barGap: '-100%',
+        barCategoryGap : '1%',
+        color: 'rgba(255,190,106,0.8)',  
+    }, {
+        type: 'bar',
+        data: [0, 3, 0, 0, 0, 0, 0, 0],
+        coordinateSystem: 'polar',
+        name: 'B',
+        stack: 'b',
+        color: 'rgba(131,171,255,0.8)'
+    }, {
+        type: 'bar',
+        data: [0, 0, 5, 0, 0, 0, 0, 0],
+        coordinateSystem: 'polar',
+        name: 'C',
+        stack: 'c',
+        color: 'rgba(117,229,179,0.8)'
+    }, {
+        type: 'bar',
+        data: [0, 0, 0, 9, 0, 0, 0, 0],
+        coordinateSystem: 'polar',
+        name: 'D',
+        stack: 'd',
+        color: 'rgba(254,146,146,0.8)'
+    }, {
+        type: 'bar',
+        data: [0, 0, 0, 0, 2, 0, 0, 0],
+        coordinateSystem: 'polar',
+        name: 'E',
+        stack: 'e',
+        color: 'rgba(178,87,253,0.8)'
+    }, {
+        type: 'bar',
+        data: [0, 0, 0, 0, 0, 4, 0, 0],
+        coordinateSystem: 'polar',
+        name: 'F',
+        stack: 'f',
+        color: 'rgba(255,255,77,0.8)'
+    }, {
+        type: 'bar',
+        data: [0, 0, 0, 0, 0, 0, 1, 0],
+        coordinateSystem: 'polar',
+        name: 'G',
+        stack: 'g',
+        color: 'rgba(170,244,254,0.8)'
+    }, {
+        type: 'bar',
+        data: [0, 0, 0, 0, 0, 0, 0, 5],
+        coordinateSystem: 'polar',
+        name: 'H',
+        stack: 'h',
+        color: 'rgba(255,152,250,0.8)'
+    }],
+    legend: {
+        show: false,
+        data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    }
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+//用于使chart自适应高度和宽度
+window.onresize = function () {
+    //重置容器高宽
+    resizeWorldMapContainer();
+    myChart.resize();
+}
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init(document.getElementById('family-echarts')); 
+ 
+/*app.title = '坐标轴刻度与标签对齐';*/
+
+option = {
+    legend: {},
+    tooltip: {},
+
+    dataset: {
+        source: [
+        //   ['product', '父母评价', '子女评价'],
+            ['苛责干涉', 2.5,3],
+            ['理解沟通',3.44,4],
+            ['喜好尊重', 2.5,3],
+            ['成长宽容', 3.44,4.1]
+        ]
+    },
+    xAxis: {
+        type: 'category',
+        axisLine:{  
+                lineStyle:{  
+                    color:'#d9d9d9',  
+                }  
+        },
+        axisTick :{                 //坐标轴刻度相关设置
+            show:false,              //是否显示坐标轴刻度
+        },
+        
+        },
+    yAxis: {
+        axisLine: {show: false},
+        // 去除y轴上的刻度线
+        axisTick: {
+        show: false
+        }
+    },
+    grid: {
+                    left: '0%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+         },
+    // Declare several bar series, each will be mapped
+    // to a column of dataset.source by default.
+    series: [
+        {type: 'bar', barWidth: '15%',color:'#ffba59'},
+        {type: 'bar', barWidth: '15%',color:'#70c5ff'},
+    ]
+};
+
+
+    // 为echarts对象加载数据 
+    myChart.setOption(option); 
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = echarts.init(document.getElementById('learn-echarts')); 
+ 
+/*app.title = '坐标轴刻度与标签对齐';*/
+
+//------------------------- begin-----------------------------
+            var myOption = {
+//              backgroundColor: "#eee",   // echarts图表的背景颜色，默认为透明
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    // legend: {
+                    //     data: ['交警', '武警','协警','你好'],
+                    //     textStyle: {  
+                    //         color: 'red'          //legend字体颜色 
+                    //     }
+                    // },
+                    grid: {
+                        left: '1%',
+                        right: '7%',
+                        top:'15%',
+                        bottom: '15%',
+                        containLabel: true
+                    },
+                    yAxis:  {
+                        show:true,                //是否显示 y 轴
+                          gridIndex:0,              //x 轴所在的 grid 的索引，默认位于第一个 grid
+                         type: 'value',
+                         splitNumber:28,             //坐标轴的分割段数
+                          minInterval:2,             //自动计算的坐标轴最小间隔大小
+                          // logBase:10,                 //对数轴的底数
+                        // y轴的字体样式
+                        axisLabel: {        
+                                show: true,
+                                textStyle: {
+                                    color: '#929292',
+                                    fontSize:'12'
+                                }
+                            },
+                        // 控制网格线是否显示
+                        splitLine: {
+                                show: true, 
+                                //  改变轴线颜色
+                                lineStyle: {
+                                    // 使用深浅的间隔色
+                                    color: ['#f7f7f7']
+                                }                            
+                        },
+                        // y轴的颜色和宽度
+                        axisLine:{
+                            show: false,
+                            lineStyle:{
+                                color:'#fff',
+                            }
+                        },
+                        // 去除y轴上的刻度线
+                        axisTick: {
+                        show: false
+                        }
+                                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['学习积极性','学习习惯','学习方法','学习安排','学习环节','进取心','阅读习惯','学习动机'],
+                        // y轴的字体样式
+                        axisLabel: {
+                                    show: true,
+                                    textStyle: {
+                                        color: '#929292'
+                                    }
+                               },
+                        // y轴的颜色和宽度
+                        axisLine:{
+                            lineStyle:{
+                                color:'#e1e1e1',
+                                  width:1,                  //这里是坐标轴的宽度
+                            }
+                        },
+                        // 去除x轴上的刻度线
+                        axisTick: {
+                        show: false
+                        }
+                    },
+                    series: [
+                    {
+                            name: '差',
+                            type: 'bar',
+                            barWidth: '22%',
+                            color:'#4e88ff',
+                            stack: "总量",
+                             label:{  
+                            show:true,  
+                            position: 'inside',
+                            textStyle:{
+                              fontSize:12,
+                              color:"#000",
+                        }
+                            },
+                            //  data: [23, 22, 28, 17, 25, 29.5, 14,27]
+                        },
+                        {
+                            name: '差',
+                            type: 'bar',
+                            barWidth: '22%',
+                            color:'#f1f1f1',
+                            stack: '总量',
+                             label:{  
+                            show:true,  
+                            position: 'inside',
+                            formatter:function(param){  
+                                if(param.dataIndex==0){  
+                                    return '弱'  
+                                }  
+                                if(param.dataIndex==1){  
+                                    return '差'  
+                                }  
+                                if(param.dataIndex==2){  
+                                    return '差'  
+                                }  
+                                if(param.dataIndex==3){  
+                                    return'差'  
+                                }  
+                                if(param.dataIndex==4){  
+                                    return '差'  
+                                }  
+                                if(param.dataIndex==5){  
+                                    return '弱'  
+                                }  
+                                if(param.dataIndex==6){  
+                                    return '差'  
+                                }  
+                                if(param.dataIndex==7){  
+                                    return '差'  
+                                }  
+                            },
+                            textStyle:{
+                              fontSize:12,
+                              color:"#000",
+                        }
+                            },
+                            data: [23, 22, 28, 17, 25, 29.5, 14,27]
+                        },
+                   
+                        {
+                            name: '一般',
+                            type: 'bar',
+                            barWidth: '22%',
+                            color:'#e2e2e2',
+                            stack: '总量',
+                             label:{  
+                            show:true,  
+                            position: 'inside',
+                            formatter:function(param){  
+                                if(param.dataIndex==0){  
+                                    return '一\n般'  
+                                }  
+                                if(param.dataIndex==1){  
+                                    return '一\n般'  
+                                }  
+                                if(param.dataIndex==2){  
+                                    return '一\n般'  
+                                }  
+                                if(param.dataIndex==3){  
+                                    return'一\n般'  
+                                }  
+                                if(param.dataIndex==4){  
+                                    return '一\n般'  
+                                }  
+                                if(param.dataIndex==5){  
+                                    return '一\n般'  
+                                }  
+                                if(param.dataIndex==6){  
+                                    return '一\n般'  
+                                }  
+                                if(param.dataIndex==7){  
+                                    return '一\n般'  
+                                }  
+                            },
+                            textStyle:{
+                              fontSize:12,
+                              color:"#000",
+                        }
+                            },
+                            // data: [31, 30, 39, 24, 33.5, 29, 18.5,37]
+                             data: [8, 8, 11, 7,8.5,12,4.5,10]
+                        },
+                        {
+                            name: '较强',
+                            type: 'bar',
+                            barWidth: '22%',
+                            color:'#d2d2d2',
+                            stack: '总量',
+                           
+                             label:{  
+                            show:true,  
+                            position: 'inside',
+                            formatter:function(param){  
+                                if(param.dataIndex==0){  
+                                    return '较\n强'  
+                                }  
+                                if(param.dataIndex==1){  
+                                    return '较\n好'  
+                                }  
+                                if(param.dataIndex==2){  
+                                    return '较\n好'  
+                                }  
+                                if(param.dataIndex==3){  
+                                    return'较\n好'  
+                                }  
+                                if(param.dataIndex==4){  
+                                    return '较\n好'  
+                                }  
+                                if(param.dataIndex==5){  
+                                    return '较\n强'  
+                                }  
+                                if(param.dataIndex==6){  
+                                    return '较\n好'  
+                                }  
+                                if(param.dataIndex==7){  
+                                    return '较\n好'  
+                                } 
+                            },
+                            textStyle:{
+                              fontSize:12,
+                              color:"#000",
+                        }
+                            },
+                            // data: [38, 37, 48, 29, 42, 50, 23,45]
+                            data: [7, 7, 9, 5, 8.5, 8.5, 4.5,8]
+                        },
+                        {
+                            name: '强',
+                            type: 'bar',
+                            barWidth: '22%',
+                            color:'#b9b9b9',
+                            stack: '总量',
+                            // label: {
+                            //     normal: {
+                            //         show: true,
+                            //         position: 'inside'
+                            //     }
+                            label:{  
+                            show:true,  
+                            position: 'inside',
+                            formatter:function(param){  
+                                if(param.dataIndex==0){  
+                                    return '强'  
+                                }  
+                                if(param.dataIndex==1){  
+                                    return '好'  
+                                }  
+                                if(param.dataIndex==2){  
+                                    return '好'  
+                                }  
+                                if(param.dataIndex==3){  
+                                    return'好'  
+                                }  
+                                if(param.dataIndex==4){  
+                                    return '好'  
+                                }  
+                                if(param.dataIndex==5){  
+                                    return '强'  
+                                }  
+                                if(param.dataIndex==6){  
+                                    return '好'  
+                                }  
+                                if(param.dataIndex==7){  
+                                    return '好'  
+                                }  
+                            },
+                            textStyle:{
+                              fontSize:12,
+                              color:"#000",
+                        }
+                            },
+                            // data: [43, 42, 53.5, 32.5, 46.5, 56, 25.5,51]
+                            data: [5, 5, 5.5, 3.5, 4.5, 6, 2.5,6]
+                        },   
+                    ]
+                };
+    // 为echarts对象加载数据 
+    myChart.setOption(myOption); 
+</script>
+<script type="text/javascript">
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = echarts.init(document.getElementById('main-echarts')); 
+             
+            option = {
+                itemStyle: {
+    // 阴影的大小
+    shadowBlur: 200,
+    // 阴影水平方向上的偏移
+    shadowOffsetX: 0,
+    // 阴影垂直方向上的偏移
+    shadowOffsetY:500,
+    // 阴影颜色
+    shadowColor: 'rgba(0, 0, 0, 0.5)'
+},
+                color: ['#78c7ff'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '0%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+          
+                xAxis : [
+                    {
+                        type : 'category',
+                        data: ['反应抑制', '工作记忆', '情绪控制', '任务启动', '持续性注意力', '计划优先次序', '组织条理性','时间管理','灵活性',
+                '元认识','目标导向的持久性'],
+                //字体太长自动换行
+                axisLabel : {
+                                interval : 0,
+
+                                formatter:function(val){  
+                    var strs = val.split(''); //字符串数组  
+                    var str = ''  
+                    for (var i = 0, s; s = strs[i++];) { //遍历字符串数组  
+                        str += s;  
+                        if (!(i % 4)) str += '\n';  
+                    }  
+                    return str  
+                } 
+                            },
+                        axisTick: {
+                            alignWithLabel: true,
+                            show: false
+                        },
+                        // x轴的颜色和宽度
+                        axisLine: {
+                            show: false,
+                            lineStyle:{
+               color:'#929292', // x坐标轴的轴线颜色
+               width:1,      //这里是坐标轴的宽度,可以去掉
+           }
+                            },
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                yAxis: {
+                    // x轴的颜色和宽度
+                        axisLine: {
+                            show: false,
+                            lineStyle:{
+               color:'#929292', // x坐标轴的轴线颜色
+               width:3,      //这里是坐标轴的宽度,可以去掉
+           }
+                            },
+                        // 去除y轴上的刻度线
+                        axisTick: {
+                        show: false
+                        }
+                },
+                series : [
+                    {
+                        name:'得分',
+                        type:'bar',
+                        barWidth: '30%',
+                        data: [2.7, 4.0, 3.0, 1.7, 2.0, 5.0, 4.7,4.3,5.0,4.0,2.3]
+                    }
+                ]
+            };
+            
+                // 为echarts对象加载数据 
+                myChart.setOption(option); 
+            </script>
+
+</body>
